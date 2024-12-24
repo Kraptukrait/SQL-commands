@@ -1,0 +1,33 @@
+# MySQL Command Reference: Procedural Language (PL)
+
+## Overview
+
+The MySQL Procedural Language allows for advanced database programming, including the use of triggers, stored procedures, functions, and control structures to implement complex business logic within the database. Below are the key commands and their descriptions.
+
+| **Command**                                                                                                                       | **Description**                                                                                                                                                                            |
+|----------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `CREATE TRIGGER trigger_name {BEFORE | AFTER} triggered_event ON table_name FOR EACH ROW BEGIN DECLARE BEGIN Block END;`         | Creates a trigger that executes a block of statements before or after a specified event (`INSERT`, `DELETE`, `UPDATE`) on a table.                                                    |
+| `OLD.attribute`                                                                                                                  | Refers to the old value of a column (for `UPDATE` or `DELETE` events).                                                                                                                 |
+| `NEW.attribute`                                                                                                                  | Refers to the new value of a column (for `INSERT` or `UPDATE` events).                                                                                                                 |
+| `event -> INSERT, DELETE, UPDATE`                                                                                                | Specifies the type of event that triggers the execution (insert, delete, or update).                                                                                                   |
+| **Block of Statements:**                                                                                                         |                                                                                                                                                                                        |
+| `SELECT ... INTO ... FROM table_name;`                                                                                           | Executes a `SELECT` query and assigns the result to variables.                                                                                                                         |
+| `DECLARE cursor_name CURSOR FOR SELECT * FROM table WHERE attribute >= ...;`                                                     | Declares an explicit cursor for iterating over query results.                                                                                                                          |
+| `OPEN cursor_name;`                                                                                                              | Opens the declared cursor.                                                                                                                                                            |
+| `FETCH cursor_name INTO variable1, ...;`                                                                                        | Fetches the next row from the cursor into specified variables.                                                                                                                         |
+| `CLOSE cursor_name;`                                                                                                             | Closes the cursor.                                                                                                                                                                     |
+| **Control Structures:**                                                                                                          |                                                                                                                                                                                        |
+| `IF condition THEN statement... [ELSEIF condition THEN statement...] [ELSE statement...] END IF;`                                | Conditional branching: Executes statements based on conditions.                                                                                                                        |
+| `WHILE condition DO statement END WHILE;`                                                                                        | Head-controlled loop; other types of loops (tail-controlled, counter-controlled) are also available.                                                                                   |
+| **Stored Procedures and Functions:**                                                                                            |                                                                                                                                                                                        |
+| `CREATE [OR REPLACE] PROCEDURE procedure_name ([argument1 [mode1] datatype1, argument2 [mode2] datatype2, ...]) BEGIN Block END;` | Creates a stored procedure with optional input/output modes for arguments (e.g., `IN`, `OUT`, `INOUT`).                                                                                |
+| `CREATE [OR REPLACE] FUNCTION function_name ([argument1 [mode1] datatype1, argument2 [mode2] datatype2, ...]) RETURNS datatype BEGIN Block END;` | Creates a stored function that returns a specified data type. Arguments can have `IN`, `OUT`, or `INOUT` modes. |
+
+## Tips for Usage
+
+- **Triggers:** Use triggers to automate actions based on data changes, ensuring consistency and implementing business rules.
+- **Stored Procedures:** Centralize and reuse logic with procedures, reducing duplication in application code.
+- **Control Structures:** Use control structures like `IF` and `WHILE` to handle complex logic within procedures and functions.
+- **Cursors:** Iterate over result sets when performing row-by-row processing, but use with caution as they may impact performance.
+- **Error Handling:** Implement error handling within procedures and triggers for robustness.
+
